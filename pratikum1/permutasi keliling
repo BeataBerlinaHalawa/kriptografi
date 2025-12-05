@@ -1,0 +1,79 @@
+import math
+import itertools
+
+def hitung_permutasi_siklis(n):
+    """
+    Menghitung jumlah Permutasi Siklis dari n objek.
+    Rumus: Ps = (n - 1)!
+    """
+    if n <= 1:
+        # Untuk n=0 atau n=1, hanya ada 1 cara (duduk kosong/duduk sendirian)
+        return 1
+    else:
+        # Menggunakan fungsi faktorial dari modul math
+        return math.factorial(n - 1)
+
+def main():
+    print("=========================================")
+    print("        KALKULATOR PERMUTASI SIKLIS      ")
+    print("=========================================")
+    
+    try:
+        # Input dari pengguna
+        n = int(input("Masukkan jumlah objek yang akan disusun melingkar (n): "))
+        
+        if n < 0:
+            print("[ERROR] Jumlah objek (n) tidak boleh negatif.")
+            return
+
+        jumlah_siklis = hitung_permutasi_siklis(n)
+        
+        print("\n--- HASIL PERHITUNGAN ---")
+        print(f"Jumlah objek (n) = {n}")
+        print(f"Rumus: Ps = ({n} - 1)! = {n-1}! ")
+        print(f"Total Jumlah Permutasi Siklis: {jumlah_siklis}")
+        
+        # --- Simulasi Visual (Untuk n kecil) ---
+        if n > 0 and n <= 5:
+            # Membuat label objek untuk simulasi
+            objek = [str(i + 1) for i in range(n)]
+            
+            print("\n--- SIMULASI SUSUNAN (Ps) ---")
+            print("Susunan dianggap SAMA jika hanya merupakan rotasi dari susunan lain.")
+            
+            # Mendapatkan semua permutasi linear (n!)
+            semua_permutasi = list(itertools.permutations(objek))
+            
+            # Algoritma sederhana untuk mengeliminasi rotasi (hanya menyimpan susunan awal)
+            susunan_unik = set()
+            for p in semua_permutasi:
+                # Membuat representasi canonical (susunan yang dimulai dari elemen terkecil/pertama)
+                # dengan merotasi susunan hingga elemen terkecil berada di awal.
+                
+                # Menemukan indeks dari elemen '1' (elemen pertama/dasar)
+                try:
+                    start_index = p.index(objek[0])
+                except ValueError:
+                    # Ini seharusnya tidak terjadi jika n > 0
+                    continue 
+
+                # Merotasi tuple agar elemen awal berada di indeks 0
+                rotated_p = p[start_index:] + p[:start_index]
+                susunan_unik.add(rotated_p)
+
+            # Catatan: Algoritma di atas lebih cocok untuk Permutasi Siklis yang tidak memiliki pencerminan (misalnya gelang).
+            # Namun, untuk ilustrasi, kita mencetak representasi linear dari susunan unik.
+            
+            list_unik = list(susunan_unik)
+            list_unik.sort()
+            
+            for i, susunan in enumerate(list_unik):
+                # Perhatikan: Output ini adalah representasi linear (tuple) dari susunan melingkar.
+                # Contoh: (1, 2, 3) dan (2, 3, 1) adalah satu susunan siklis.
+                print(f"Susunan {i+1}: {susunan}")
+            
+    except ValueError:
+        print("\n[ERROR] Input harus berupa bilangan bulat.")
+
+if __name__ == "__main__":
+    main()

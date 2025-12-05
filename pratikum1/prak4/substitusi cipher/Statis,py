@@ -1,0 +1,29 @@
+def transposisi_cipher(plaintext):
+    # Baris ini tampak keliru dan akan membuat part_length sama dengan len(plaintext)
+    # sehingga 'parts' hanya akan berisi satu elemen: seluruh plaintext itu sendiri.
+    part_length = len(plaintext)
+    
+    # Karena part_length = len(plaintext), maka i akan berkisar dari 0 hingga len(plaintext)
+    # dengan step len(plaintext). Artinya i hanya akan bernilai 0.
+    # parts = [plaintext[0:len(plaintext)]] = [plaintext]
+    parts = [plaintext[i:i + part_length] for i in range(0, 
+                                                        len(plaintext), part_length)]
+    
+    ciphertext = ""
+    
+    # Loop kolom ini secara eksplisit mengiterasi 4 kali (untuk kolom 0, 1, 2, 3)
+    for col in range(4):
+        for part in parts:
+            # part di sini adalah seluruh plaintext
+            if col < len(part):
+                # Ambil karakter pada indeks 'col' dari 'part' (plaintext)
+                ciphertext += part[col]
+                
+    return ciphertext
+
+# Contoh penggunaan yang diberikan
+plaintext = "UNIKA SANTO THOMAS"
+ciphertext = transposisi_cipher(plaintext)
+
+# Mencetak hasil
+print(ciphertext)

@@ -1,0 +1,17 @@
+import itertools
+
+# Total objek (n)
+elemen_n = ['A', 'B', 'C', 'D'] 
+
+# Jumlah objek yang diambil (r)
+panjang_r = 2 
+
+# Menghasilkan semua permutasi (r dari n)
+permutasi_sebagian = list(itertools.permutations(elemen_n, panjang_r))
+
+# Menampilkan hasil
+print(f"Permutasi P({len(elemen_n)}, {panjang_r}):")
+print(f"Total permutasi: {len(permutasi_sebagian)}")
+print("Daftar permutasi:")
+for p in permutasi_sebagian:
+    print(p)
